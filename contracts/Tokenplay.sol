@@ -20,7 +20,6 @@ contract Tokenplay {
     }
 
     constructor(address _ERC20address) {
-        //  ERC20("CURRENCY", "MATIC") {
         inter = InterfaceERC20(_ERC20address);
         admins = msg.sender;
         staker[msg.sender].activeUser = true;
@@ -28,7 +27,6 @@ contract Tokenplay {
         count = 1;
         inter.mint(admins);
     }
-    //console.log("inter data type",parent);
     modifier onlyAdmins() {
         require(msg.sender == admins, "not an admin");
         _;

@@ -10,9 +10,7 @@ let signers: SignerWithAddress[];
 let owner: SignerWithAddress;
 let user1: SignerWithAddress;
 let user2: SignerWithAddress;
-// let ownerBalance: BigInt;
-// let user1Balance: BigInt;
-// let user2Balance: BigInt;
+
 
 const initialSupply = 7000n;
 
@@ -29,13 +27,9 @@ beforeEach("Describe contract Multilevel Transfer", async function () {
   hardhatTokenplay = await Tokenplay.deploy(hardhatERC20Functions.address);
   await hardhatERC20Functions.deployed();
   await hardhatTokenplay.deployed();
-//   ownerBalance = await hardhatERC20Functions.findBalance(owner.address);
-//   user1Balance = await hardhatERC20Functions.findBalance(user1.address);
-//   user2Balance = await hardhatERC20Functions.findBalance(user2.address);
 });
 describe("contract Tokenplay", function () {
   it("Constructor initialization", async function () {
-    //await hardhatTokenplay.inter.mint(owner.address);
     expect(await hardhatTokenplay.admins()).to.equal(owner.address);
     expect(await hardhatTokenplay.parent()).to.equal(owner.address);
   });
