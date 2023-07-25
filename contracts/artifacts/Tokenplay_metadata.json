@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.20+commit.a1b79de6"
+		"version": "0.8.21+commit.d9974bed"
 	},
 	"language": "Solidity",
 	"output": {
@@ -17,6 +17,50 @@
 				"type": "constructor"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "message",
+						"type": "string"
+					}
+				],
+				"name": "success",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "message",
+						"type": "string"
+					}
+				],
+				"name": "userJoined",
+				"type": "event"
+			},
+			{
 				"inputs": [],
 				"name": "admins",
 				"outputs": [
@@ -24,6 +68,58 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getkey1",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getkey2",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getkeyStatus",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getkeyUsed",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -44,6 +140,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "gettokenKey",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "inter",
 				"outputs": [
 					{
@@ -56,10 +165,27 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "join",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "keyHolder",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "t1",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "t2",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -76,8 +202,34 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					}
+				],
+				"name": "passKey",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "random",
+				"name": "random1",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "random2",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -100,7 +252,7 @@
 				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "tokenid",
+						"name": "tokenKey",
 						"type": "uint256"
 					},
 					{
@@ -109,24 +261,22 @@
 						"type": "address"
 					},
 					{
-						"internalType": "bool",
-						"name": "setreferrer",
-						"type": "bool"
+						"internalType": "uint256",
+						"name": "keyused",
+						"type": "uint256"
 					},
 					{
 						"internalType": "bool",
 						"name": "activeUser",
 						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "keystatus",
+						"type": "bool"
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "tokenId",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -143,7 +293,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/MultilevelTransfer_flattened.sol": "Tokenplay"
+			"contracts/Tokenplay.sol": "Tokenplay"
 		},
 		"evmVersion": "shanghai",
 		"libraries": {},
@@ -157,11 +307,28 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/MultilevelTransfer_flattened.sol": {
-			"keccak256": "0x28a6c071726957a80275694591463eadd4516680ca841db39702618eb5bdd3f0",
+		"contracts/InterfaceERC20.sol": {
+			"keccak256": "0x244e47c73fd7a5433ebcc34af184809ff9a45a5f6be72bf3a372a7ddd4631b65",
+			"license": "MIT",
 			"urls": [
-				"bzz-raw://652c547789b94d1c7a5ed121a22c21c702bc784af276a3327942d73e751f0904",
-				"dweb:/ipfs/Qmbax4JRg3Hww2MA2EYTFLeTcvxYzZ1buBDQKEZmrurirk"
+				"bzz-raw://dcd622313ac2289685872a36caa38c8762c2407541c376ec3568241ec6c94a86",
+				"dweb:/ipfs/QmQkXWav3TGYD4E9q1GhkkMF1s4mVSMVaGTfPk1FGqRxEX"
+			]
+		},
+		"contracts/Tokenplay.sol": {
+			"keccak256": "0xd1a40a4de1a53125d5872efeb19484ff3855a1c8ba1c634989512bb1763021ee",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://301f2eae246af65323beba6087229bb33810e887008985a256706957a2ebfa60",
+				"dweb:/ipfs/Qmcv7jCEY5y1WkP7kPPSyMgp6ubYYo4YUuR57C1UtmsyLa"
+			]
+		},
+		"hardhat/console.sol": {
+			"keccak256": "0xfb9a1c05ce82a728e108b58b71a09f13d9586fc70555e82d190e9b2f5a6183af",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://99a82d0154a830eab2627cc36e6638b1eeb6766f408575eccb4efbd4e8bde1d0",
+				"dweb:/ipfs/QmZztP46dzfy43QtSqnP2jnhZhtQxjFqhiBMz56b8qC5Ty"
 			]
 		}
 	},

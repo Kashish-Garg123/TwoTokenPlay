@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.20+commit.a1b79de6"
+		"version": "0.8.21+commit.d9974bed"
 	},
 	"language": "Solidity",
 	"output": {
@@ -55,7 +55,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "transfer",
+				"name": "transferToken",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -74,7 +74,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/MultilevelTransfer_flattened.sol": "InterfaceERC20"
+			"contracts/InterfaceERC20.sol": "InterfaceERC20"
 		},
 		"evmVersion": "shanghai",
 		"libraries": {},
@@ -88,11 +88,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/MultilevelTransfer_flattened.sol": {
-			"keccak256": "0x28a6c071726957a80275694591463eadd4516680ca841db39702618eb5bdd3f0",
+		"contracts/InterfaceERC20.sol": {
+			"keccak256": "0x244e47c73fd7a5433ebcc34af184809ff9a45a5f6be72bf3a372a7ddd4631b65",
+			"license": "MIT",
 			"urls": [
-				"bzz-raw://652c547789b94d1c7a5ed121a22c21c702bc784af276a3327942d73e751f0904",
-				"dweb:/ipfs/Qmbax4JRg3Hww2MA2EYTFLeTcvxYzZ1buBDQKEZmrurirk"
+				"bzz-raw://dcd622313ac2289685872a36caa38c8762c2407541c376ec3568241ec6c94a86",
+				"dweb:/ipfs/QmQkXWav3TGYD4E9q1GhkkMF1s4mVSMVaGTfPk1FGqRxEX"
 			]
 		}
 	},

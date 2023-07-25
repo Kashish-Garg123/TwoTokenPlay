@@ -51,7 +51,7 @@
 		"methodIdentifiers": {
 			"findBalance(address)": "cfba4fe0",
 			"mint(address)": "6a627842",
-			"transfer(address,address,uint256)": "beabacc8"
+			"transferToken(address,address,uint256)": "f5537ede"
 		}
 	},
 	"abi": [
@@ -105,7 +105,7 @@
 					"type": "uint256"
 				}
 			],
-			"name": "transfer",
+			"name": "transferToken",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"

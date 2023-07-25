@@ -10,8 +10,9 @@ let signers: SignerWithAddress[];
 let owner: SignerWithAddress;
 let user1: SignerWithAddress;
 let user2: SignerWithAddress;
-
-
+let user3: SignerWithAddress;
+let user4: SignerWithAddress;
+let user5: SignerWithAddress;
 const initialSupply = 7000n;
 
 beforeEach("Describe contract Multilevel Transfer", async function () {
@@ -21,6 +22,9 @@ beforeEach("Describe contract Multilevel Transfer", async function () {
   owner = signers[0];
   user1 = signers[1];
   user2 = signers[2];
+  user3 = signers[3];
+  user4 = signers[4];
+  user5 = signers[5];
   const initialSupply = 7000n;
   //console.log("owner address", owner);
   hardhatERC20Functions = await ERC20Functions.deploy();
@@ -52,52 +56,106 @@ describe("Transfer of tokens and joining", function () {
     await hardhatERC20Functions.transferToken(
       owner.address,
       user1.address,
-      600n
+      1000n
     );
     const user1Balance = await hardhatERC20Functions.findBalance(user1.address);
-    expect(user1Balance).to.equal(600n);
+    expect(user1Balance).to.equal(1000n);
     await hardhatERC20Functions.transferToken(
       owner.address,
       user2.address,
-      600n
+      1000n
     );
     const user2Balance = await hardhatERC20Functions.findBalance(user2.address);
-    expect(user2Balance).to.equal(600n);
-    //User1 Joined checked parent,balance,active user
-    await hardhatTokenplay.connect(user1).tokenId();
-
-    await hardhatTokenplay.connect(user1).join();
+    expect(user2Balance).to.equal(1000n);
+    await hardhatERC20Functions.transferToken(
+      owner.address,
+      user3.address,
+      1000n
+    );
+    const user3Balance = await hardhatERC20Functions.findBalance(user3.address);
+    expect(user3Balance).to.equal(1000n);
+    await hardhatERC20Functions.transferToken(
+      owner.address,
+      user4.address,
+      1000n
+    );
+    const user4Balance = await hardhatERC20Functions.findBalance(user4.address);
+    expect(user4Balance).to.equal(1000n);
+    await hardhatERC20Functions.transferToken(
+      owner.address,
+      user5.address,
+      1000n
+    );
+    const user5Balance = await hardhatERC20Functions.findBalance(user5.address);
+    expect(user5Balance).to.equal(1000n);
+    //user1 joined by getting key from owner,check transfer balance,parent,active user,owner token1 destroyed
+    await hardhatTokenplay.connect(user1).passKey(owner.address);
+    expect(await hardhatTokenplay.connect(user1).getactiveUser()).is.equal(
+      true
+    );
     const newUser1Balance = await hardhatERC20Functions.findBalance(
       user1.address
     );
-    console.log(newUser1Balance, "Balance of user1 after joining");
-    expect(await hardhatTokenplay.connect(user1).getactiveUser()).to.equal(
-      true
-    );
-    expect(newUser1Balance).to.equal(100n);
+    expect(newUser1Balance).to.equal(500n); //balance checked
     expect(await hardhatTokenplay.connect(user1).getreferrer()).to.equal(
       owner.address
+    ); //parent checked
+    expect(await hardhatTokenplay.getkey1()).to.equal(0);
+    //user2 joined by getting key from owner,check transfer balance,parent,active user,owner token1 destroyed
+    await hardhatTokenplay.connect(user2).passKey(owner.address);
+    expect(await hardhatTokenplay.connect(user1).getactiveUser()).is.equal(
+      true
     );
-    // User2 Joining Checked parent balance active user 
-    await hardhatTokenplay.connect(user2).tokenId();
-    await hardhatTokenplay.connect(user2).join();
     const newUser2Balance = await hardhatERC20Functions.findBalance(
       user2.address
     );
-    const newOwnerBalance = await hardhatERC20Functions.findBalance(
-      owner.address
-    );
-    const parentUser1Balance=await hardhatERC20Functions.findBalance(user1.address);
-    expect(await hardhatTokenplay.connect(user2).getactiveUser()).to.equal(
-      true
-    );
-    expect(newUser2Balance).to.equal(100n);
-    expect(newOwnerBalance).to.equal(7000n - 600n - 600n + 500n + 200n);
-    expect(parentUser1Balance).to.equal(600n - 500n + 300n);
+    expect(newUser2Balance).to.equal(500n); //balance checked
     expect(await hardhatTokenplay.connect(user2).getreferrer()).to.equal(
+      owner.address
+    ); //parent checked
+    expect(await hardhatTokenplay.getkey2()).to.equal(0);
+    //User 3 joined withe parent as user1
+    await hardhatTokenplay.connect(user3).passKey(user1.address);
+    const newUser3Balance = await hardhatERC20Functions.findBalance(
+      user3.address
+    );
+    expect(newUser3Balance).to.equal(500n); //balance checked
+    const parentUser1Balance = await hardhatERC20Functions.findBalance(
       user1.address
     );
-    expect (await hardhatTokenplay.connect(user1).getsetReferrer()).to.equal(true);
-    expect (await hardhatTokenplay.getsetReferrer()).to.equal(true);
+    expect(parentUser1Balance).to.equal(800n); //balance checked
+    expect(await hardhatTokenplay.connect(user3).getactiveUser()).to.equal(
+      true
+    );
+    expect(await hardhatTokenplay.connect(user3).getreferrer()).to.equal(
+      user1.address
+    );
+    expect(await hardhatTokenplay.connect(user1).getkey1()).to.equal(0);
+    //user4 Joined checked parent,grandparent,balance,activeuser
+    await hardhatTokenplay.connect(user4).passKey(user3.address);
+    const newuser4Balance = await hardhatERC20Functions.findBalance(
+      user4.address
+    );
+    const parentuser3Balance = await hardhatERC20Functions.findBalance(
+      user3.address
+    );
+    const grandparentuser1Balance = await hardhatERC20Functions.findBalance(
+      user1.address
+    );
+    expect(await hardhatTokenplay.connect(user4).getactiveUser()).to.equal(
+      true
+    );
+    expect(await hardhatTokenplay.connect(user3).getkey1()).to.equal(0);
+    expect(newuser4Balance).to.equal(500n);
+    expect(parentuser3Balance).to.equal(800n);
+    expect(grandparentuser1Balance).to.equal(1000n);
+    expect(await hardhatTokenplay.getkeyUsed()).to.equal(2);
+    expect(await hardhatTokenplay.connect(user1).getkeyUsed()).to.equal(1);
+    await expect(
+      hardhatTokenplay.connect(user4).passKey(owner.address)
+    ).to.be.revertedWith("user already exist");
+    await expect(
+      hardhatTokenplay.connect(user5).passKey(owner.address)
+    ).to.be.revertedWith("No key to pass");
   });
 });
